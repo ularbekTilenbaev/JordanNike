@@ -5,6 +5,7 @@ const initialState = {
     categoryMan:[],
     categoryWoman:[],
     categoryKids:[],
+    sale:[]
 };
 
 export const addProductSlice = createSlice({
@@ -20,11 +21,16 @@ export const addProductSlice = createSlice({
             state.categoryWoman = state.product.filter((el) => el.category === "woman");
             state.categoryKids = state.product.filter((el) => el.category === "kids");
         },
-         
+        saleProduct(state,action) {
+        let filterSale = state.product.filter((el)=> el.price >= 300)
+        state.sale = filterSale.map((el) =>{
+        return{...el, oldPrice: el.price, price: el.price - el.price / 100 * 30}
+        })
+        }
     }
 });
 
 
-export const { addProduct, categoryProduct, categoryWoman,categoryKids } = addProductSlice.actions;
+export const { addProduct, categoryProduct, categoryWoman,categoryKids, saleProduct, oldPrice } = addProductSlice.actions;
 export default addProductSlice.reducer;
 
